@@ -1,0 +1,39 @@
+Vagrant.configure("2") do |config|
+  config.hostmanager.enabled = true 
+  config.hostmanager.manage_host = true
+
+
+### Memcache vm  #### 
+  config.vm.define "srv01" do |srv01|
+    srv01.vm.box = "ubuntu/focal64"
+    srv01.vm.hostname = "srv01"
+    srv01.vm.define "srv01"
+    srv01.vm.synced_folder ".//srv01//", "/srv01"
+    if Vagrant.has_plugin?("vagrant-vbguest")
+      srv01.vbguest.auto_update = false
+    end
+    srv01.vm.network "private_network", ip: "192.168.56.10"
+    srv01.vm.network "private_network", ip: "10.0.2.10"
+    srv01.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+      vb.name = "srv01"
+    end
+  end
+  
+### DB vm  ####
+  config.vm.define "srv02" do |srv02|
+    srv02.vm.box = "ubuntu/focal64"
+    srv02.vm.hostname = "srv02"
+    srv02.vm.define "srv02"
+    srv02.vm.synced_folder ".//srv02//", "/srv02"
+    if Vagrant.has_plugin?("vagrant-vbguest")
+      srv02.vbguest.auto_update = false
+    end
+    srv02.vm.network "private_network", ip: "192.168.56.20"
+    srv02.vm.network "private_network", ip: "10.0.2.20"
+    srv02.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+      vb.name = "srv02"
+    end
+  end
+end
