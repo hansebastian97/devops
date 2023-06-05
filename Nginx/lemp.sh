@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 #Variables
 PASSWD="vagrant"
@@ -28,9 +28,9 @@ SUDO rm -rf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 
 # NVM
-echo $PASSWD | sudo -S apt install wget -y
-wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
-source ~/.profile ** run bash script
+SUDO -S apt install wget -y
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+source ~/.nvm/nvm.sh
 nvm install $NODE_VERSION
 
 # PM2
@@ -64,7 +64,7 @@ server{
 }
 EOF
 
-ln -s /etc/nginx/sites-available/$PROJECT_NAME /etc/nginx/sites-enabled
+SUDO ln -s /etc/nginx/sites-available/$PROJECT_NAME /etc/nginx/sites-enabled
 systemctl restart nginx
 
 

@@ -1,1 +1,0 @@
-{"virtualbox":{"/srv02":{"guestpath":"/srv02","hostpath":"D:/devops/vagrant/srv02","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"D:/devops/vagrant","disabled":false,"__vagrantfile":true}}}

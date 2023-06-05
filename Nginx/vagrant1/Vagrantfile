@@ -1,7 +1,7 @@
 Vagrant.configure("2") do |config|
-
+  config.vagrant.plugins = ["vagrant-vbguest"]
   config.vm.hostname = "nginx-handbook-box"
-
+  config.vbguest.auto_update = false
   config.vm.box = "ubuntu/focal64"
 
   config.vm.define "nginx-handbook-box"
@@ -12,5 +12,15 @@ Vagrant.configure("2") do |config|
     vb.memory = "1024"
     vb.name = "nginx-handbook"
   end
+  config.vm.synced_folder "C:\\Users\\Hans\\Documents\\devops\\desktop\\devops\\Nginx\\vagrant1\\vagrant_folder", "/vagrant"
+  # config.vm.provision "shell", path: "../lemp.sh" 
+  # config.vbguest.auto_update = true
+  # config.vbguest.installer_options = { allow_kernel_upgrade: true }
+  # config.vbguest.installer_hooks[:before_start] = [
+  #   "echo 'vboxsf' > /etc/modules-load.d/vboxsf.conf", 
+  #   "systemctl restart systemd-modules-load.service", 
+  #   "echo '=== Verifying vboxsf module is loaded'", 
+  #   "cat /proc/modules | grep vbox" 
+  # ]
 
 end
