@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
     vb.memory = "1024"
     vb.name = "nginx-handbook"
   end
-  config.vm.synced_folder "C:\\Users\\Hans\\Documents\\devops\\desktop\\devops\\Nginx\\vagrant1\\vagrant_folder", "/vagrant"
+  config.vm.synced_folder ".\\vagrant_folder", "/vagrant"
   # config.vm.provision "shell", path: "../lemp.sh" 
   # config.vbguest.auto_update = true
   # config.vbguest.installer_options = { allow_kernel_upgrade: true }

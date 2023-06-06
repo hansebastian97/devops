@@ -11,7 +11,6 @@ SUDO() {
     eval "echo $PASSWD | sudo -S $COMMAND"
 }
 
-
 # Initial
 SUDO apt update -y && SUDO apt upgrade -y
 
@@ -29,47 +28,49 @@ SUDO rm -rf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 # NVM
 echo $PASSWD | sudo -S apt install wget -y
-wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
-source ~/.profile ** run bash script
-# nvm install $NODE_VERSION
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+source ~/.nvm/nvm.sh
+nvm install $NODE_VERSION
 
-# # PM2
-# npm install pm2 -g
+# PM2
+npm install pm2 -g
 
-# # Setup project directory
-# SUDO mkdir -p /srv/$PROJECT_NAME
-# SUDO chown -R $USER:$USER /srv/$PROJECT_NAME
-# SUDO chmod -R 755 /srv/$PROJECT_NAME
-# git clone https://github.com/hansebastian97/note_app.git /srv/$PROJECT_NAME
-# npm install
+# Setup project directory
+if [ -d "/srv/$PROJECT_NAME/" ]; then
+    SUDO rm -rf /srv/$PROJECT_NAME/
+fi
+SUDO git clone https://github.com/hansebastian97/note_app.git /srv/$PROJECT_NAME
+SUDO chown -R $USER:$USER /srv/$PROJECT_NAME
+SUDO chmod -R 755 /srv/$PROJECT_NAME
 
+# Start project
+cd /srv/$PROJECT_NAME
+npm install
+pm2 start server.js
 
-
-# # Nginx config
-# cat <<EOF > /etc/nginx/sites-available/$PROJECT_NAME
-# server{
-#     listen 80;
-#     listen [::]:80;
-
-
-#     server_name 192.168.56.200;
-
-# 	location / {
-# 		proxy_set_header X-Real-IP $remote_addr;
-# 		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-# 		proxy_set_header Host $host;
-# 		proxy_pass http://localhost:3000/;
-# 		proxy_redirect http://localhost:3000/ http://$server_name;
-# 	}
-# }
-# EOF
-
-# ln -s /etc/nginx/sites-available/$PROJECT_NAME /etc/nginx/sites-enabled
-# systemctl restart nginx
+# Nginx config
+cat <<'EOF' > $HOME/$PROJECT_NAME.conf
+server{
+    listen 80;
+    listen [::]:80;
 
 
+    server_name 192.168.56.20;
 
+    location / {
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $host;
+        proxy_pass http://localhost:3000/;
+        proxy_redirect http://localhost:3000/ http://$server_name;
+    }
+}
+EOF
 
-
-
-
+if [ ! -f "/etc/nginx/sites-available/$PROJECT_NAME.conf" ]; then
+    SUDO rm /etc/nginx/sites-enabled/$PROJECT_NAME.conf
+    SUDO mv $HOME/$PROJECT_NAME.conf /etc/nginx/sites-available/$PROJECT_NAME.conf
+    SUDO ln -s /etc/nginx/sites-available/$PROJECT_NAME.conf /etc/nginx/sites-enabled
+fi
+SUDO systemctl restart nginx
+exit
