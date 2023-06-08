@@ -7,15 +7,13 @@ SUDO() {
     local COMMAND="$@"
     eval "echo $PASSWD | sudo -S $COMMAND"
 }
-
-# Nginx config
-cat <<'EOF' > /$PROJECT_NAME.conf
+cat <<'EOF' > $HOME/$PROJECT_NAME.conf
 server{
     listen 80;
     listen [::]:80;
 
 
-    server_name 192.168.56.200;
+    server_name 192.168.56.20;
 
     location / {
         proxy_set_header X-Real-IP $remote_addr;
@@ -27,9 +25,10 @@ server{
 }
 EOF
 
-if [ ! -f "/etc/nginx/sites-available/$PROJECT_NAME.conf" ]; then
+if [ -f "/etc/nginx/sites-available/$PROJECT_NAME.conf" ]; then
+    echo "File Exist!"
     SUDO rm /etc/nginx/sites-enabled/$PROJECT_NAME.conf
-    SUDO mv /$PROJECT_NAME.conf /etc/nginx/sites-available/$PROJECT_NAME.conf
-    SUDO ln -s /etc/nginx/sites-available/$PROJECT_NAME.conf /etc/nginx/sites-enabled
 fi
-SUDO systemctl restart nginx
+
+SUDO mv $HOME/$PROJECT_NAME.conf /etc/nginx/sites-available/$PROJECT_NAME.conf
+SUDO ln -s /etc/nginx/sites-available/$PROJECT_NAME.conf /etc/nginx/sites-enabled

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 #Variables
 PASSWD="vagrant"
 NODE_VERSION="v18.16.0"
@@ -12,22 +14,26 @@ SUDO() {
 }
 
 # Initial
-SUDO apt update -y && SUDO apt upgrade -y
-
+# SUDO apt update -y && SUDO apt upgrade -y
+SUDO apt update -y
 # Install required packages
 # Nginx
 SUDO apt install nginx -y
-SUDO ufw allow 'Nginx HTTP'
-SUDO ufw allow 'Nginx HTTPS'
+echo "Firewall"
+SUDO ufw allow 80
+SUDO ufw allow 443
 SUDO systemctl enable ufw
 SUDO ufw enable
-SUDO ufw allow 'Nginx HTTPS'
-SUDO ufw allow 'Nginx HTTPS'
-SUDO rm -rf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-
+if [ -f /etc/nginx/sites-available/default ]; then
+    SUDO rm /etc/nginx/sites-available/default
+    SUDO rm /etc/nginx/sites-enabled/default
+fi
 
 # NVM
 echo $PASSWD | sudo -S apt install wget -y
+echo "Installing NVM!"
+echo "#################"
+
 wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 source ~/.nvm/nvm.sh
 nvm install $NODE_VERSION
@@ -67,10 +73,11 @@ server{
 }
 EOF
 
-if [ ! -f "/etc/nginx/sites-available/$PROJECT_NAME.conf" ]; then
+if [ -f "/etc/nginx/sites-available/$PROJECT_NAME.conf" ]; then
+    SUDO rm /etc/nginx/sites-available/$PROJECT_NAME.conf
     SUDO rm /etc/nginx/sites-enabled/$PROJECT_NAME.conf
-    SUDO mv $HOME/$PROJECT_NAME.conf /etc/nginx/sites-available/$PROJECT_NAME.conf
-    SUDO ln -s /etc/nginx/sites-available/$PROJECT_NAME.conf /etc/nginx/sites-enabled
 fi
+SUDO mv $HOME/$PROJECT_NAME.conf /etc/nginx/sites-available/$PROJECT_NAME.conf
+SUDO ln -s /etc/nginx/sites-available/$PROJECT_NAME.conf /etc/nginx/sites-enabled
 SUDO systemctl restart nginx
 exit
