@@ -146,9 +146,9 @@ class CustomerService {
 
         switch(event){
             case 'ADD_TO_WISHLIST':
-            case 'REMOVE_FROM_WISHLIST':
                 this.AddToWishlist(userId,product)
                 break;
+            case 'REMOVE_FROM_WISHLIST':
             case 'ADD_TO_CART':
                 this.ManageCart(userId,product, qty, false);
                 break;

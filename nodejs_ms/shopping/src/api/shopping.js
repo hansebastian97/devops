@@ -5,6 +5,7 @@ const UserAuth = require('./middlewares/auth');
 module.exports = (app) => {
     
     const service = new ShoppingService();
+    
 
     app.post('/order',UserAuth, async (req,res,next) => {
 
@@ -40,12 +41,15 @@ module.exports = (app) => {
     });
        
     
+
+
+
+    
     app.get('/cart', UserAuth, async (req,res,next) => {
 
         const { _id } = req.user;
 
         try {
-
             const { data } = await service.GetCart({ _id });
             return res.status(200).json(data);
         } catch (err) {

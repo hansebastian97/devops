@@ -5,7 +5,7 @@ module.exports = (app) => {
 
     app.use('/app-events', async (req, res, next) => {
         const { payload } = req.body;
-
+        console.log(payload);
         service.SubscribeEvents(payload);
 
         console.log( '================= Shopping Service Received Event ================');

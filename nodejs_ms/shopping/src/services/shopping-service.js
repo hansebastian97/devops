@@ -11,8 +11,7 @@ class ShoppingService {
     try {
 
       const cartItems = await this.repository.Cart(_id);
-
-      return FormateData(cartItems)
+      return FormateData(cartItems);
     } catch (err){
       throw err;
     }
@@ -79,7 +78,7 @@ class ShoppingService {
             event: event,
             data: { userId, order}
         }
-        return FormateData(payload)
+        return payload
     }else{
         return FormateData({error: 'No Order is available'})
     }

@@ -86,7 +86,8 @@ class ShoppingRepository {
                     cartItems.map(item => {
                         amount += parseInt(item.product.price) *  parseInt(item.unit);   
                     });
-        
+                    
+                    
                     const orderId = uuidv4();
         
                     const order = new OrderModel({
