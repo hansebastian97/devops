@@ -40,9 +40,31 @@ module.exports = (app) => {
 
     });
        
-    
+    app.put('/cart', UserAuth, async (req, res, next) => {
+        const { _id } = req.user;
 
+        try{
+            const { data } = await service.AddToCart(_id, req.body._id);
 
+            return res.status(200).json(data);
+        } catch(err){
+            next(err)
+        }
+
+    })
+
+    app.delete('/cart/:id', UserAuth, async (req, res, next) => {
+        const { _id } = req.user;
+
+        try{
+            const { data } = await service.AddToCart(_id, req.body._id);
+
+            return res.status(200).json(DataTransfer)
+        } catch (err) {
+            next(err)
+        }
+
+    })
 
     
     app.get('/cart', UserAuth, async (req,res,next) => {
