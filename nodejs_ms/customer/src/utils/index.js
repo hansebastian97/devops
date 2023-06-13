@@ -53,22 +53,25 @@ module.exports.FormateData = (data) => {
 
 // Message Broker
 module.exports.CreateChannel = async() => {
+
   try{
     const connection = await amqplib.connect(MESSAGE_BROKER_URL)
     const channel = await connection.createChannel();
     await channel.assertExchange(EXCHANGE_NAME, 'direct', false);
+    return channel
   }catch(err){
     throw err
   }
 
 }
 
-module.exports.SubscribeMessage = async(channel, service, binding_key) => {
+module.exports.SubscribeMessage = async(channel, service) => {
+
   const appQueue = await channel.assertQueue(QUEUE_NAME);
   
   channel.bindQueue(appQueue.queue, EXCHANGE_NAME, CUSTOMER_BINDING_KEY);
 
-  channel.consume(appQueue, data => {
+  channel.consume(appQueue.queue, data => {
     console.log('Received data');
     console.log(data.content.toString());
     channel.ack(data)
