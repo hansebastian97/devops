@@ -1,7 +1,7 @@
 const CustomerService = require("../services/customer-service");
 const UserAuth = require("./middlewares/auth");
 
-const { SubscribeMessage } = require('../utils')
+const { SubscribeMessage} = require("../utils")
 
 module.exports = (app, channel) => {
   

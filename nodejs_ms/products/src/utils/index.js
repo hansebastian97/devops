@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { APP_SECRET, MESSAGE_BROKER_URL, EXCHANGE_NAME } = require("../config");
 const amqplib = require("amqplib");
+const { QUEUE_NAME } = require("../../../customer/src/config");
 
 //Utility functions
 module.exports.GenerateSalt = async () => {
@@ -55,7 +56,7 @@ module.exports.CreateChannel = async() => {
   try{
     const connection = await amqplib.connect(MESSAGE_BROKER_URL)
     const channel = await connection.createChannel();
-    await channel.assertQueue(EXCHANGE_NAME, 'direct', false);
+    await channel.assertExchange(EXCHANGE_NAME, 'direct', false);
     return channel
   }catch(err){
     throw err
@@ -63,16 +64,17 @@ module.exports.CreateChannel = async() => {
 
 }
 
-module.exports.PublishMessage = async(channel, binding_key, message) => {
+module.exports.PublishMessage = async(channel, service, message) => {
   try{
-    await channel.publish(EXCHANGE_NAME, binding_key, Buffer.from(message))
+    await channel.publish(EXCHANGE_NAME, service, Buffer.from(message))
+    console.log('Message has been sent! '+ message)
   } catch (err){
     throw err
   }
 }
 
 module.exports.SubscribeMessage = async(channel, service, binding_key) => {
-  const appQueue = await channel.assertQueue("QUEUE_NAME");
+  const appQueue = await channel.assertQueue(QUEUE_NAME);
   
   channel.bindQueue(appQueue.queue, EXCHANGE_NAME, binding_key);
 

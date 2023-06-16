@@ -140,11 +140,15 @@ class CustomerService {
 
     async SubscribeEvents(payload){
  
+        payload = JSON.parse(payload);
+        
         const { event, data } =  payload;
 
         const { userId, product, order, qty } = data;
 
         switch(event){
+            
+            
             case 'ADD_TO_WISHLIST':
                 this.AddToWishlist(userId,product)
                 break;

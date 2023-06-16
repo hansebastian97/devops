@@ -19,7 +19,7 @@ class ShoppingRepository {
  
     async Cart(customerId){
         try{
-            const cartItems = await CartModel.find({customerId: customerId})
+            const cartItems = await CartModel.find({ customerId: customerId })
             if(cartItems){
                 return cartItems;
             }

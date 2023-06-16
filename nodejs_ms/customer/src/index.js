@@ -11,8 +11,8 @@ const StartServer = async() => {
     
     await databaseConnection();
 
-    const channel = await CreateChannel()
-
+    // Create RabbitMQ Channel
+    const channel = await CreateChannel();
     
     await expressApp(app, channel);
 

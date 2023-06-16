@@ -3,7 +3,7 @@ const { PublishMessage } = require('../utils')
 const UserAuth = require('./middlewares/auth')
 const { SHOPPING_BINDING_KEY, CUSTOMER_BINDING_KEY} = require('../config')
 
-module.exports = (app) => {
+module.exports = (app, channel) => {
     
     const service = new ProductService();
 
@@ -65,16 +65,22 @@ module.exports = (app) => {
      
     app.put('/wishlist',UserAuth, async (req,res,next) => {
 
-        const { _id } = req.user;
+        // console.log("Bisa")
 
-        // get payload // to send to customer service
-        const { data } = await service.GetProductPayload(_id, {productId: req.body._id}, 'ADD_TO_WISHLIST')
+        const { _id } = req.user;
+        // console.log(_id)
+        // return res.status(200).json(_id)
+        // // get payload // to send to customer service
+        
         
         try {
+
+            const { data } = await service.GetProductPayload(_id, {productId: req.body._id}, 'ADD_TO_WISHLIST')
+            
             PublishMessage(channel, CUSTOMER_BINDING_KEY, JSON.stringify(data));
             return res.status(200).json(data.data.product);
         } catch (err) {
-            
+            next(err)
         }
     });
     

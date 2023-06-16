@@ -66,14 +66,15 @@ module.exports.CreateChannel = async() => {
 }
 
 module.exports.SubscribeMessage = async(channel, service) => {
-
+  await channel.assertExchange(EXCHANGE_NAME, "direct", { durable: true });
   const appQueue = await channel.assertQueue(QUEUE_NAME);
-  
+  console.log(` Waiting for messages in queue: ${appQueue.queue}`);
   channel.bindQueue(appQueue.queue, EXCHANGE_NAME, CUSTOMER_BINDING_KEY);
 
   channel.consume(appQueue.queue, data => {
     console.log('Received data');
     console.log(data.content.toString());
+    service.SubscribeEvents(data.content.toString())
     channel.ack(data)
   })
 }
