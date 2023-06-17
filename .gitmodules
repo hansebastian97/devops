@@ -1,0 +1,3 @@
+[submodule "nodejs_frontend"]
+	path = nodejs_frontend
+	url = https://github.com/hansebastian97/nodejs_frontend.git
