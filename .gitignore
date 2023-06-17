@@ -1,3 +1,4 @@
 # Ignored Files
 project/.vagrant
 Nginx/vagrant1/.vagrant
+vagrant/.vagrant
