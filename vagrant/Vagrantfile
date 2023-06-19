@@ -5,19 +5,21 @@ Vagrant.configure("2") do |config|
 
 ### Frontend ###
   config.vm.define "fe01" do |fe01|
-    fe01.vm.box = "ubuntu/bionic64"
+    fe01.vm.box = "ubuntu/focal64"
     fe01.vm.hostname = "fe01"
     fe01.vm.network "private_network", ip: "192.168.56.100"
     fe01.vm.synced_folder ".\\vagrant_folder\\fe01", "/vagrant"
     fe01.vm.provider "virtualbox" do |vb|
       vb.memory = "1024"
       vb.name = "fe01"
+    fe01.vm.provision "shell", path: ".\\vagrant_folder\\fe01\\init.sh"
+    # fe01.vm.provision "shell", path: ".\\vagrant_folder\\fe01\\node.sh"
     end
   end
   
 ### Reverse Proxy ###
   config.vm.define "proxy01" do |proxy01|
-    proxy01.vm.box = "ubuntu/bionic64"
+    proxy01.vm.box = "ubuntu/focal64"
     proxy01.vm.hostname = "proxy01"
     proxy01.vm.network "private_network", ip: "192.168.56.110"
     proxy01.vm.synced_folder ".\\vagrant_folder\\proxy01", "/vagrant"
@@ -29,7 +31,7 @@ Vagrant.configure("2") do |config|
 
 ### Customer Service ###
   config.vm.define "customer" do |customer|
-    customer.vm.box = "ubuntu/bionic64"
+    customer.vm.box = "ubuntu/focal64"
     customer.vm.hostname = "customer"
     customer.vm.network "private_network", ip: "192.168.56.101"
     customer.vm.synced_folder ".\\vagrant_folder\\customer", "/vagrant"
@@ -41,7 +43,7 @@ Vagrant.configure("2") do |config|
   
 ### Customer Service ###
   config.vm.define "products" do |products|
-    products.vm.box = "ubuntu/bionic64"
+    products.vm.box = "ubuntu/focal64"
     products.vm.hostname = "products"
     products.vm.network "private_network", ip: "192.168.56.102"
     products.vm.synced_folder ".\\vagrant_folder\\products", "/vagrant"
@@ -53,7 +55,7 @@ Vagrant.configure("2") do |config|
   
 ### Customer Service ###
   config.vm.define "shopping" do |shopping|
-    shopping.vm.box = "ubuntu/bionic64"
+    shopping.vm.box = "ubuntu/focal64"
     shopping.vm.hostname = "shopping"
     shopping.vm.network "private_network", ip: "192.168.56.103"
     shopping.vm.synced_folder ".\\vagrant_folder\\shopping", "/vagrant"
@@ -65,7 +67,7 @@ Vagrant.configure("2") do |config|
 
 ### Customer Service ###
   config.vm.define "rabbitMQ" do |rabbitMQ|
-    rabbitMQ.vm.box = "ubuntu/bionic64"
+    rabbitMQ.vm.box = "ubuntu/focal64"
     rabbitMQ.vm.hostname = "rabbitMQ"
     rabbitMQ.vm.network "private_network", ip: "192.168.56.200"
     rabbitMQ.vm.synced_folder ".\\vagrant_folder\\rabbitMQ", "/vagrant"

@@ -34,7 +34,7 @@ echo $PASSWD | sudo -S apt install wget -y
 echo "Installing NVM!"
 echo "#################"
 
-wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash 
 source ~/.nvm/nvm.sh
 nvm install $NODE_VERSION
 
