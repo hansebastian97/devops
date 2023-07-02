@@ -1,0 +1,23 @@
+Vagrant.configure("2") do |config|
+  config.hostmanager.enabled = true 
+  config.hostmanager.manage_host = true
+  # config.vbguest.auto_update = false
+
+### Frontend ###
+  config.vm.define "docker01" do |docker01|
+    docker01.vm.box = "ubuntu/focal64"
+    docker01.vm.hostname = "docker01"
+    docker01.vm.network "private_network", ip: "192.168.56.5"
+    docker01.vm.synced_folder ".\\vagrant_folder\\", "/vagrant"
+    docker01.vm.synced_folder "..\\nodejs_ms\\customer", "/nodejs_ms/customer"
+    docker01.vm.synced_folder "..\\nodejs_ms\\products", "/nodejs_ms/products"
+    docker01.vm.synced_folder "..\\nodejs_ms\\shopping", "/nodejs_ms/shopping"
+    docker01.vm.synced_folder "..\\nodejs_frontend", "/nodejs_ms/frontend"
+    docker01.vm.provider "virtualbox" do |vb|
+      vb.memory = "4000"
+      vb.name = "docker01"
+    docker01.vm.provision "shell", path: ".\\vagrant_folder\\init.sh"
+    # docker01.vm.provision "shell", path: ".\\vagrant_folder\\docker.sh"
+    end
+  end
+end

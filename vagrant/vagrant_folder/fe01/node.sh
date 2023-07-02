@@ -11,7 +11,7 @@ USER="vagrant"
 
 # Run PM2
 cd /srv/$PROJECT_NAME
-# npm install
+npm install
 sudo chown -R $USER:$USER /srv/$PROJECT_NAME
 sudo chmod -R 755 /srv/$PROJECT_NAME
 
