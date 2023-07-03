@@ -29,7 +29,7 @@ sudo systemctl enable docker
 
 
 # Add your user to Docker group
-sudo usermod -aG docker $USER
+sudo usermod -aG docker vagrant
 useradd -m -s /bin/bash -G sudo,docker hansebastian97
-
+newgrp docker
 exit

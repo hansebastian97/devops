@@ -1,5 +1,6 @@
 # Ignored Files
 project/.vagrant
+docker/.vagrant
 Nginx/vagrant1/.vagrant
 vagrant/.vagrant
 ssh-keygen/

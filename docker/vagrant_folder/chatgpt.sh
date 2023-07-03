@@ -17,9 +17,10 @@ sudo apt install -y docker-ce docker-ce-cli containerd.io
 # Add the current user to the 'docker' group to run Docker without sudo
 sudo usermod -aG docker $USER
 useradd -m -s /bin/bash -G sudo,docker hansebastian97
-
+newgrp docker
 # Enable Docker to start on boot
 sudo systemctl enable docker
 
 # Display Docker version
 docker version
+exit
