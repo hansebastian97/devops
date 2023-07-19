@@ -65,6 +65,6 @@ sudo chmod -R 755 /home/vagrant/srv/
 sudo apt update
 cd /home/vagrant/srv/nodejs_frontend
 npm install
-pm2 start npm --name "Shopping Cart" -- start
-
+pm2 start npm start --name "Shopping Cart" -- start
+pm2 save
 sudo systemctl restart nginx

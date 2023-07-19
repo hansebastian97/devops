@@ -63,8 +63,9 @@ sudo chown -R $USER:$USER /home/vagrant/srv/
 sudo chmod -R 755 /home/vagrant/srv/
 
 sudo apt update
-cd /home/vagrant/srv/$PROJECT_NAME
+cd /home/vagrant/srv/nodejs_products
 npm install
-pm2 start npm --name "Products" -- start
+pm2 start npm --name "Products" -- run "start"
+pm2 save
 
 sudo systemctl restart nginx

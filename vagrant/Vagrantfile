@@ -12,8 +12,8 @@ Vagrant.configure("2") do |config|
     fe01.vm.provider "virtualbox" do |vb|
       vb.memory = "1024"
       vb.name = "fe01"
-    fe01.vm.provision "shell", path: ".\\vagrant_folder\\fe01\\init.sh"
     end
+    fe01.vm.provision "shell", path: ".\\vagrant_folder\\fe01\\init.sh"
   end
   
 ### Reverse Proxy ###

@@ -7,7 +7,7 @@ PASSWD="vagrant"
 NODE_VERSION="v18.16.0"
 PROJECT_NAME="nodejs_customer"
 USER="vagrant"
-GITHUB_REPO="https://github.com/hansebastian97/nodejs_customer.git"
+GITHUB_REPO="https://github.com/hansebastian97/nodejs_shopping.git"
 
 sudo apt update
 # sudo apt upgrade -y
@@ -68,3 +68,5 @@ npm install
 pm2 start npm --name "Products" -- start
 
 sudo systemctl restart nginx
+
+exit

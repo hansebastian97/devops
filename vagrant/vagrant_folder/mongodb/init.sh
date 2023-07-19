@@ -17,5 +17,7 @@ sudo systemctl enable mongod
 
 # Enable firewall
 sudo ufw allow 27017/tcp
-sudo ufw enable
+yes | sudo ufw enable
 sudo systemctl restart mongod
+
+exit
