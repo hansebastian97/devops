@@ -59,8 +59,9 @@ Vagrant.configure("2") do |config|
     customer.vm.synced_folder ".\\vagrant_folder\\customer", "/vagrant"
     customer.vm.provider "virtualbox" do |vb|
       vb.memory = "1024"
-      vb.name = "_customer"
+      vb.name = "customer"
     end
+    customer.vm.provision "shell", path: ".\\vagrant_folder\\customer\\customer.sh"
   end
   
 ### Customer Service ###
