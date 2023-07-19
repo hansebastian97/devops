@@ -5,9 +5,9 @@ set -e
 #Variables
 PASSWD="vagrant"
 NODE_VERSION="v18.16.0"
-PROJECT_NAME="shopping_cart.com"
+PROJECT_NAME="nodejs_products"
 USER="vagrant"
-GITHUB_REPO="https://github.com/hansebastian97/nodejs_frontend.git"
+GITHUB_REPO="https://github.com/hansebastian97/nodejs_products.git"
 
 sudo apt update
 # sudo apt upgrade -y
@@ -63,8 +63,8 @@ sudo chown -R $USER:$USER /home/vagrant/srv/
 sudo chmod -R 755 /home/vagrant/srv/
 
 sudo apt update
-cd /home/vagrant/srv/nodejs_frontend
+cd /home/vagrant/srv/$PROJECT_NAME
 npm install
-pm2 start npm --name "Shopping Cart" -- start
+pm2 start npm --name "Products" -- start
 
 sudo systemctl restart nginx

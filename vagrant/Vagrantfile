@@ -1,7 +1,7 @@
 Vagrant.configure("2") do |config|
   config.hostmanager.enabled = true 
   config.hostmanager.manage_host = true
-  # config.vbguest.auto_update = false
+  config.vbguest.auto_update = false
 
 ### Frontend ###
   config.vm.define "fe01" do |fe01|
@@ -13,7 +13,6 @@ Vagrant.configure("2") do |config|
       vb.memory = "1024"
       vb.name = "fe01"
     fe01.vm.provision "shell", path: ".\\vagrant_folder\\fe01\\init.sh"
-    # fe01.vm.provision "shell", path: ".\\vagrant_folder\\fe01\\node.sh"
     end
   end
   
@@ -28,7 +27,30 @@ Vagrant.configure("2") do |config|
       vb.name = "proxy01"
     end
   end
-
+### Customer Service ###
+  config.vm.define "mongodb" do |mongodb|
+    mongodb.vm.box = "ubuntu/focal64"
+    mongodb.vm.hostname = "mongodb"
+    mongodb.vm.network "private_network", ip: "192.168.56.150"
+    mongodb.vm.synced_folder ".\\vagrant_folder\\mongodb", "/vagrant"
+    mongodb.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+      vb.name = "mongodb"
+    end
+    mongodb.vm.provision "shell", path: ".\\vagrant_folder\\mongodb\\init.sh"
+  end
+### Customer Service ###
+  config.vm.define "rabbitMQ" do |rabbitMQ|
+    rabbitMQ.vm.box = "ubuntu/focal64"
+    rabbitMQ.vm.hostname = "rabbitMQ"
+    rabbitMQ.vm.network "private_network", ip: "192.168.56.200"
+    rabbitMQ.vm.synced_folder ".\\vagrant_folder\\rabbitMQ", "/vagrant"
+    rabbitMQ.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+      vb.name = "rabbitMQ"
+    end
+    rabbitMQ.vm.provision "shell", path: ".\\vagrant_folder\\rabbitMQ\\rabbitmq.sh"
+  end
 ### Customer Service ###
   config.vm.define "customer" do |customer|
     customer.vm.box = "ubuntu/focal64"
@@ -51,6 +73,7 @@ Vagrant.configure("2") do |config|
       vb.memory = "1024"
       vb.name = "products"
     end
+    products.vm.provision "shell", path: ".\\vagrant_folder\\products\\init.sh"
   end
   
 ### Customer Service ###
@@ -62,18 +85,6 @@ Vagrant.configure("2") do |config|
     shopping.vm.provider "virtualbox" do |vb|
       vb.memory = "1024"
       vb.name = "shopping"
-    end
-  end
-
-### Customer Service ###
-  config.vm.define "rabbitMQ" do |rabbitMQ|
-    rabbitMQ.vm.box = "ubuntu/focal64"
-    rabbitMQ.vm.hostname = "rabbitMQ"
-    rabbitMQ.vm.network "private_network", ip: "192.168.56.200"
-    rabbitMQ.vm.synced_folder ".\\vagrant_folder\\rabbitMQ", "/vagrant"
-    rabbitMQ.vm.provider "virtualbox" do |vb|
-      vb.memory = "1024"
-      vb.name = "rabbitMQ"
     end
   end
 
