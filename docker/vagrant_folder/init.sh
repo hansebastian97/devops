@@ -24,12 +24,12 @@ sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 # Test Docker Engine Installation
-sudo docker run hello-world
+sudo docker info
 sudo systemctl enable docker
 
-
+sudo apt-get update
 # Add your user to Docker group
+newgrp docker
 sudo usermod -aG docker vagrant
 useradd -m -s /bin/bash -G sudo,docker hansebastian97
-newgrp docker
 exit

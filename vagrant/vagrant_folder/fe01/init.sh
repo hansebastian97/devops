@@ -61,12 +61,18 @@ git config --global user.name "hansebastian97"
 git clone -b main "$GITHUB_REPO"
 sudo chown -R $USER:$USER /home/vagrant/srv/
 sudo chmod -R 755 /home/vagrant/srv/
-
 sudo apt update
+
+# Setup directory for app
 cd /home/vagrant/srv/nodejs_frontend
 npm install
 pm2 unstartup
 pm2 startup systemd -u $USER
-pm2 start npm start --name "Shopping Cart" -- start
+# Set new path variable for PM2
+echo "export PM2_HOME=/home/$USER/.pm2" >> /home/$USER/.bashrc
+source /home/$NEW_USERNAME/.bashrc
+
+# Start NPM
+pm2 start npm --name "Shopping Cart" -- run "start"
 pm2 save
 sudo systemctl restart nginx

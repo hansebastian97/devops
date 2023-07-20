@@ -12,11 +12,13 @@ sudo apt-get update
 sudo apt-get install -y mongodb-org
 
 # Start MongoDB
+sudo cp /vagrant/mongod.conf /etc/mongod.conf
 sudo systemctl start mongod
 sudo systemctl enable mongod
 
 # Enable firewall
 sudo ufw allow 27017/tcp
+sudo ufw allow 22/tcp
 yes | sudo ufw enable
 sudo systemctl restart mongod
 

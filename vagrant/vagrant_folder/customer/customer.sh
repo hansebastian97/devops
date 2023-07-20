@@ -65,6 +65,13 @@ sudo chmod -R 755 /home/vagrant/srv/
 sudo apt update
 cd /home/vagrant/srv/$PROJECT_NAME
 npm install
-pm2 start npm --name "Products" -- start
+pm2 unstartup
+pm2 startup systemd -u $USER
+# Set new path variable for PM2
+echo "export PM2_HOME=/home/$USER/.pm2" >> /home/$USER/.bashrc
+source /home/$NEW_USERNAME/.bashrc
 
+# Start NPM
+pm2 start npm --name "Products" -- run "start"
+pm2 save
 sudo systemctl restart nginx
