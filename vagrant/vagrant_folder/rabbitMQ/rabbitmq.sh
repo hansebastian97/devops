@@ -11,6 +11,12 @@ sudo apt install rabbitmq-server -y
 sudo systemctl start rabbitmq-server
 sudo systemctl enable rabbitmq-server
 sudo systemctl status rabbitmq-server
+
+# Enable firewall
+sudo ufw allow 15672/tcp
+sudo ufw allow 5672/tcp
+sudo ufw allow 22/tcp
+yes | sudo ufw enable
 sudo sh -c 'echo "[{rabbit, [{loopback_users, []}]}]." > /etc/rabbitmq/rabbitmq.config'
 sudo rabbitmqctl add_user test test
 sudo rabbitmqctl set_user_tags test administrator

@@ -2,12 +2,14 @@
 
 set -e
 
+echo $USER
+
 #Variables
 PASSWD="vagrant"
 NODE_VERSION="v18.16.0"
-PROJECT_NAME="nodejs_customer"
+PROJECT_NAME="nodejs_frontend"
 NEW_USER="vagrant"
-GITHUB_REPO="https://github.com/hansebastian97/nodejs_customer.git"
+GITHUB_REPO="https://github.com/hansebastian97/nodejs_frontend.git"
 
 
 sudo apt update

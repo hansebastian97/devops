@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
       vb.memory = "1024"
       vb.name = "fe01"
     end
-    fe01.vm.provision "shell", path: ".\\vagrant_folder\\fe01\\init.sh"
+    fe01.vm.provision "shell", privileged: false, path: ".\\vagrant_folder\\fe01\\test.sh"
   end
   
 ### Reverse Proxy ###
@@ -37,7 +37,7 @@ Vagrant.configure("2") do |config|
       vb.memory = "1024"
       vb.name = "mongodb"
     end
-    mongodb.vm.provision "shell", path: ".\\vagrant_folder\\mongodb\\init.sh"
+    mongodb.vm.provision "shell", privileged: false, path: ".\\vagrant_folder\\mongodb\\init.sh"
   end
 ### Customer Service ###
   config.vm.define "rabbitMQ" do |rabbitMQ|
@@ -49,7 +49,7 @@ Vagrant.configure("2") do |config|
       vb.memory = "1024"
       vb.name = "rabbitMQ"
     end
-    rabbitMQ.vm.provision "shell", path: ".\\vagrant_folder\\rabbitMQ\\rabbitmq.sh"
+    rabbitMQ.vm.provision "shell", privileged: false, path: ".\\vagrant_folder\\rabbitMQ\\rabbitmq.sh"
   end
 ### Customer Service ###
   config.vm.define "customer" do |customer|
@@ -61,7 +61,7 @@ Vagrant.configure("2") do |config|
       vb.memory = "1024"
       vb.name = "customer"
     end
-    customer.vm.provision "shell", path: ".\\vagrant_folder\\customer\\customer.sh"
+    customer.vm.provision "shell", privileged: false, path: ".\\vagrant_folder\\customer\\customer.sh"
   end
   
 ### Customer Service ###
@@ -74,7 +74,7 @@ Vagrant.configure("2") do |config|
       vb.memory = "1024"
       vb.name = "products"
     end
-    products.vm.provision "shell", path: ".\\vagrant_folder\\products\\init.sh"
+    products.vm.provision "shell", privileged: false, path: ".\\vagrant_folder\\products\\products.sh"
   end
   
 ### Customer Service ###
@@ -87,6 +87,7 @@ Vagrant.configure("2") do |config|
       vb.memory = "1024"
       vb.name = "shopping"
     end
+    shopping.vm.provision "shell", privileged: false, path: ".\\vagrant_folder\\shopping\\shopping.sh"
   end
 
 end
