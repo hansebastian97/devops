@@ -10,6 +10,7 @@ USER="vagrant"
 GITHUB_REPO="https://github.com/hansebastian97/nodejs_frontend.git"
 
 sudo apt update
+sudo apt install net-tools
 # sudo apt upgrade -y
 
 # Install Nginx

@@ -26,6 +26,7 @@ Vagrant.configure("2") do |config|
       vb.memory = "1024"
       vb.name = "proxy01"
     end
+    proxy01.vm.provision "shell", privileged: false, path: ".\\vagrant_folder\\proxy01\\proxy.sh"
   end
 ### Customer Service ###
   config.vm.define "mongodb" do |mongodb|

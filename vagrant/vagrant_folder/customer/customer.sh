@@ -11,6 +11,7 @@ GITHUB_REPO="https://github.com/hansebastian97/nodejs_customer.git"
 
 
 sudo apt update
+sudo apt install net-tools
 # sudo apt upgrade -y
 
 echo ""
