@@ -6,6 +6,7 @@ for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do
 
 # Update the apt package index and install packages to allow apt to use a repository over HTTPS:
 sudo apt-get update -y
+sudo apt install net-tools
 sudo apt-get install ca-certificates curl gnupg -y
 
 # Add Docker’s official GPG key:
@@ -31,5 +32,4 @@ sudo apt-get update
 # Add your user to Docker group
 newgrp docker
 sudo usermod -aG docker vagrant
-useradd -m -s /bin/bash -G sudo,docker hansebastian97
 exit

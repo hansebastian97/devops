@@ -4,20 +4,20 @@ Vagrant.configure("2") do |config|
   config.vbguest.auto_update = false
 
 ### Frontend ###
-  config.vm.define "node_ms" do |node_ms|
-    node_ms.vm.box = "ubuntu/focal64"
-    node_ms.vm.hostname = "node_ms"
-    node_ms.vm.network "private_network", ip: "192.168.56.100"
-    node_ms.vm.synced_folder ".\\vagrant_folder\\", "/vagrant"
-    node_ms.vm.synced_folder ".\\customer", "/nodejs_ms/customer"
-    node_ms.vm.synced_folder ".\\products", "/nodejs_ms/products"
-    node_ms.vm.synced_folder ".\\shopping", "/nodejs_ms/shopping"
-    node_ms.vm.synced_folder ".\\nodejs_frontend", "/nodejs_ms/frontend"
-    node_ms.vm.synced_folder ".\\proxy", "/nodejs_ms/proxy"
-    node_ms.vm.provider "virtualbox" do |vb|
+  config.vm.define "nodeapp" do |nodeapp|
+    nodeapp.vm.box = "ubuntu/focal64"
+    nodeapp.vm.hostname = "nodeapp"
+    nodeapp.vm.network "private_network", ip: "192.168.56.100"
+    nodeapp.vm.synced_folder ".\\vagrant_folder\\", "/vagrant"
+    nodeapp.vm.synced_folder ".\\customer", "/nodejs_ms/customer"
+    nodeapp.vm.synced_folder ".\\products", "/nodejs_ms/products"
+    nodeapp.vm.synced_folder ".\\shopping", "/nodejs_ms/shopping"
+    nodeapp.vm.synced_folder ".\\nodejs_frontend", "/nodejs_ms/frontend"
+    nodeapp.vm.synced_folder ".\\proxy", "/nodejs_ms/proxy"
+    nodeapp.vm.provider "virtualbox" do |vb|
       vb.memory = "4000"
-      vb.name = "node_ms"
-    node_ms.vm.provision "shell", path: ".\\vagrant_folder\\init.sh"
+      vb.name = "nodeapp"
+    nodeapp.vm.provision "shell", path: ".\\vagrant_folder\\init.sh"
     # docker01.vm.provision "shell", path: ".\\vagrant_folder\\docker.sh"
     end
   end

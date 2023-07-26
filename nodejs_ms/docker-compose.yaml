@@ -1,0 +1,85 @@
+version: "3"
+services:
+  nosql-db:
+    image: mongo
+    container_name: nosql-db
+    ports:
+      -"27017:27017"
+    volumes:
+      - ./mongo/db/:/data/db
+  rabbitmq:
+    image:
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./rabbitmq/data/:/var/lib/rabbitmq/
+      - ./rabbitmq/log/:/var/log/rabbitmq
+  frontend:
+    build:
+      context: ./nodejs_frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/srv
+      - /srv/frontend/node_modules
+  products:
+    build:
+      context: ./products
+      dockerfile: Dockerfile
+    container_name: products
+    ports: 
+      - "8002:8002"
+    depends_on:
+      - "nosql-db"
+      - "rabbitmq"
+    volumes:
+      - .:/srv
+      - /srv/products/node_modules
+    env_file:
+      - ./products/.env
+  customer:
+    build:
+      context: ./customer
+      dockerfile: Dockerfile
+    container_name: customer
+    ports: 
+      - "8001:8001"
+    depends_on:
+      - "nosql-db"
+      - "rabbitmq"
+    volumes:
+      - .:/srv
+      - /srv/customer/node_modules
+    env_file:
+      - ./customer/.env
+  shopping:
+    build:
+      context: ./shopping
+      dockerfile: Dockerfile
+    container_name: shopping
+    ports: 
+      - "8003:8003"
+    depends_on:
+      - "nosql-db"
+      - "rabbitmq"
+    volumes:
+      - .:/srv
+      - /srv/shopping/node_modules
+    env_file:
+      - ./shopping/.env
+  nginx-proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    depends_on:
+      - products
+      - shopping
+      - customer
+    ports:
+      - "80:80"
+
+    
