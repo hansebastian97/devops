@@ -38,7 +38,7 @@ services:
       - "rabbitmq"
     volumes:
       - .:/srv
-      - /srv/products/node_modules
+      - /srv/service_products/node_modules
     env_file:
       - ./products/.env
   customer:
@@ -53,7 +53,7 @@ services:
       - "rabbitmq"
     volumes:
       - .:/srv
-      - /srv/customer/node_modules
+      - /srv/service_customer/node_modules
     env_file:
       - ./customer/.env
   shopping:
@@ -68,7 +68,7 @@ services:
       - "rabbitmq"
     volumes:
       - .:/srv
-      - /srv/shopping/node_modules
+      - /srv/service_shopping/node_modules
     env_file:
       - ./shopping/.env
   nginx-proxy:
