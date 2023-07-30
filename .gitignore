@@ -1,4 +1,5 @@
 # Ignored Files
+jenkins/.vagrant
 project/.vagrant
 docker/.vagrant
 Nginx/vagrant1/.vagrant
