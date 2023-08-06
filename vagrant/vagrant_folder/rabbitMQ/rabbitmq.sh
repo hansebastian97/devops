@@ -1,6 +1,8 @@
 #!/bin/bash
-sudo apt install epel-release -y
+
+
 sudo apt update -y
+sudo apt install epel-release -y
 sudo apt install wget -y
 cd /tmp/
 wget http://packages.erlang-solutions.com/erlang-solutions-2.0-1.noarch.rpm
