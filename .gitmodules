@@ -7,6 +7,3 @@
 [submodule "nodejs_ms/shopping"]
 	path = nodejs_ms/shopping
 	url = https://github.com/hansebastian97/nodejs_shopping.git
-[submodule "nodejs_frontend"]
-	path = nodejs_ms/nodejs_frontend
-	url = https://github.com/hansebastian97/nodejs_frontend.git
