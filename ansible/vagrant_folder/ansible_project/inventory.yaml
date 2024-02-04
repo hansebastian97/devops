@@ -1,0 +1,8 @@
+stacks:
+  hosts:
+    jenkins:
+      ansible_host: 192.168.60.100
+    monitor:
+      ansible_host: 192.168.60.110
+    prod:
+      ansible_host: 192.168.60.150

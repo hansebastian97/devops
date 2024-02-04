@@ -1,0 +1,62 @@
+Vagrant.configure("2") do |config|
+    config.hostmanager.enabled = true 
+    config.hostmanager.manage_host = true
+    config.vbguest.auto_update = false
+
+    ### Ansible ###
+    config.vm.define "controlnode" do |controlnode|
+      controlnode.vm.box = "ubuntu/focal64"
+      controlnode.vm.hostname = "controlnode"
+      controlnode.vm.network "private_network", ip: "192.168.60.50"
+      controlnode.vm.synced_folder ".\\vagrant_folder", "/vagrant"
+      controlnode.vm.disk :disk, size: "10GB", primary: true
+      controlnode.vm.provider "virtualbox" do |vb|
+        vb.memory = "2024"
+        vb.name = "controlnode"
+      end
+      controlnode.vm.provision "shell", privileged: false, path: ".\\vagrant_folder\\init.sh"
+    end  
+  
+  ### Jenkins ###
+    config.vm.define "jenkins" do |jenkins|
+      jenkins.vm.box = "ubuntu/focal64"
+      jenkins.vm.hostname = "jenkins"
+      jenkins.vm.network "private_network", ip: "192.168.60.100"
+      jenkins.vm.synced_folder ".\\vagrant_folder", "/vagrant"
+      jenkins.vm.disk :disk, size: "10GB", primary: true
+      jenkins.vm.provider "virtualbox" do |vb|
+        vb.memory = "2024"
+        vb.name = "jenkins"
+      end
+      jenkins.vm.provision "shell", privileged: false, path: ".\\vagrant_folder\\init.sh"
+    end
+    
+  ### Monitoring (Prometheus Grafana) ###
+    config.vm.define "monitor" do |monitor|
+      monitor.vm.box = "ubuntu/focal64"
+      monitor.vm.hostname = "monitor"
+      monitor.vm.network "private_network", ip: "192.168.60.110"
+      monitor.vm.synced_folder ".\\vagrant_folder", "/vagrant"
+      monitor.vm.disk :disk, size: "10GB", primary: true
+      monitor.vm.provider "virtualbox" do |vb|
+        vb.memory = "1024"
+        vb.name = "monitor"
+      end
+    #   monitor.vm.provision "shell", privileged: false, path: ".\\vagrant_folder\\proxy01\\proxy.sh"
+    end
+
+
+  ### Jenkins Slave / Deployment ###
+    config.vm.define "prod" do |prod|
+      prod.vm.box = "ubuntu/focal64"
+      prod.vm.hostname = "prod"
+      prod.vm.network "private_network", ip: "192.168.60.150"
+      prod.vm.synced_folder ".\\vagrant_folder", "/vagrant"
+      prod.vm.disk :disk, size: "10GB", primary: true
+      prod.vm.provider "virtualbox" do |vb|
+        vb.memory = "1024"
+        vb.name = "prod"
+      end
+    #   prod.vm.provision "shell", privileged: false, path: ".\\vagrant_folder\\mongodb\\init.sh"
+    end
+end
