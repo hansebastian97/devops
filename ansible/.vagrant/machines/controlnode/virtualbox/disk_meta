@@ -1,1 +1,1 @@
-{"disk":[{"uuid":"a1c98da5-645c-4e1c-beb3-d46dc1877a2d","port":"0","device":"0","name":"vagrant_primary","controller":"SCSI"}],"floppy":[],"dvd":[]}
+{"disk":[{"uuid":"cac2b56c-2b6f-4d75-954c-7fe0cbdf6ed7","port":"0","device":"0","name":"vagrant_primary","controller":"SCSI"}],"floppy":[],"dvd":[]}
