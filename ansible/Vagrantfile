@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
         vb.memory = "2024"
         vb.name = "controlnode"
       end
-      controlnode.vm.provision "shell", privileged: false, path: ".\\vagrant_folder\\init.sh"
+      controlnode.vm.provision "shell", privileged: false, path: ".\\vagrant_folder\\source.sh"
     end  
   
   ### Jenkins ###
@@ -42,7 +42,7 @@ Vagrant.configure("2") do |config|
         vb.memory = "1024"
         vb.name = "monitor"
       end
-      monitor.vm.provision "shell", privileged: false, path: ".\\vagrant_folder\\init.sh"
+      monitor.vm.provision "shell", privileged: false, path: ".\\vagrant_folder\\source.sh"
     end
 
 
