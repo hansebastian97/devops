@@ -12,10 +12,15 @@
     create_home: false
 
 - name: Create folder
+  become: true
   ansible.builtin.file:
-    path: /etc/node_exporter
+    path: "{{ item }}"
+    state: directory
     owner: node_exporter
     group: node_exporter
+  with_items:
+    - /etc/node_exporter/
+    - /home/vagrant/node_exporter_file/
 
 - name: Download Node Exporter
   ansible.builtin.get_url:
@@ -25,19 +30,30 @@
     # group: node_exporter
 
 - name: Extract Node Exporter
+  become: true
   ansible.builtin.unarchive:
     remote_src: true
     src: /home/vagrant/node_exporter.tar.gz
-    dest: /home/vagrant
+    dest: /home/vagrant/node_exporter_file/
   register: node_exporter_unarchive
 
 - name: Remove tar file
   ansible.builtin.file:
     path: /home/vagrant/node_exporter.tar.gz
-    state:absent
+    state: absent
   when: node_exporter_unarchive.changed
 
-- name: Move Node Exporter to /usr/ib
-  ansible.builtin.copy:
+- name: Move Node Exporter to /usr/lib
+  become: true
+  ansible.builtin.command: sudo cp /home/vagrant/node_exporter_file/node_exporter*/node_exporter /usr/bin/node_exporter
+  args:
+    creates: /usr/bin/node_exporter
+
+- name: Change node_exporter ownership
+  become: true
+  ansible.builtin.file:
+    path: /usr/bin/node_exporter
+    owner: node_exporter
+    group: node_exporter
+    state: file
     remote_src: true
-    src: "/home/vagrant/"
