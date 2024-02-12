@@ -24,9 +24,20 @@
     # owner: node_exporter
     # group: node_exporter
 
-# - name: Extract Node Exporter
-#   ansible.builtin.unarchive:
-#     url: {{ node_exporter_url }}
-#     dest: /etc/node_exporter
-#     owner: node_exporter
-#     group: node_exporter
+- name: Extract Node Exporter
+  ansible.builtin.unarchive:
+    remote_src: true
+    src: /home/vagrant/node_exporter.tar.gz
+    dest: /home/vagrant
+  register: node_exporter_unarchive
+
+- name: Remove tar file
+  ansible.builtin.file:
+    path: /home/vagrant/node_exporter.tar.gz
+    state:absent
+  when: node_exporter_unarchive.changed
+
+- name: Move Node Exporter to /usr/ib
+  ansible.builtin.copy:
+    remote_src: true
+    src: "/home/vagrant/"
