@@ -45,15 +45,24 @@
 
 - name: Move Node Exporter to /usr/lib
   become: true
-  ansible.builtin.command: sudo cp /home/vagrant/node_exporter_file/node_exporter*/node_exporter /usr/bin/node_exporter
+  ansible.builtin.shell: 
+    cmd: sudo cp /home/vagrant/node_exporter_file/node_exporter*/node_exporter /usr/bin/node_exporter
   args:
-    creates: /usr/bin/node_exporter
+    executable: /bin/bash
 
-- name: Change node_exporter ownership
+# - name: Change node_exporter ownership
+#   become: true
+#   ansible.builtin.file:
+#     path: /usr/bin/node_exporter
+#     owner: node_exporter
+#     group: node_exporter
+#     state: file
+
+- name: Create Node Service
   become: true
-  ansible.builtin.file:
-    path: /usr/bin/node_exporter
+  template:
+    src: node_exporter.service
+    dest: /usr/lib/systemd/system/node_exporter.service
+    mode: '0664'
     owner: node_exporter
     group: node_exporter
-    state: file
-    remote_src: true
