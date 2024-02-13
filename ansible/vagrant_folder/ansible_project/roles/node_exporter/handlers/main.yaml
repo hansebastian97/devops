@@ -1,0 +1,12 @@
+---
+- name: Start Node Exporter
+  become: true
+  ansible.builtin.systemd:
+    name: node_exporter
+    state: restarted
+
+- name: Enable Node Exporter
+  become: true
+  ansible.builtin.systemd:
+    name: node_exporter
+    state: enabled

@@ -2,17 +2,25 @@
 - name: Import variables
   include_vars: ../vars/vars.yaml
 
+- name: Create group
+  become: true
+  become_method: sudo
+  ansible.builtin.group:
+    name: node_exporter
+    state: present
+
 - name: Create user
   become: true
   become_method: sudo
   ansible.builtin.user:
     name: node_exporter
     group: node_exporter
-    shell: node_exporter
+    shell: /bin/false
     create_home: false
 
 - name: Create folder
   become: true
+  become_method: sudo
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
@@ -50,19 +58,29 @@
   args:
     executable: /bin/bash
 
-# - name: Change node_exporter ownership
-#   become: true
-#   ansible.builtin.file:
-#     path: /usr/bin/node_exporter
-#     owner: node_exporter
-#     group: node_exporter
-#     state: file
+- name: Change node_exporter ownership
+  become: true
+  ansible.builtin.file:
+    path: /usr/bin/node_exporter
+    owner: node_exporter
+    group: node_exporter
+    state: file
 
 - name: Create Node Service
   become: true
-  template:
+  ansible.builtin.template:
     src: node_exporter.service
     dest: /usr/lib/systemd/system/node_exporter.service
     mode: '0664'
     owner: node_exporter
     group: node_exporter
+
+- name: Reload daemon
+  become: true
+  ansible.builtin.systemd:
+    name: node_exporter
+    daemon_reload: yes
+    state: reloaded
+  notify: 
+    - Start Node Exporter
+    - Enable Node Exporter

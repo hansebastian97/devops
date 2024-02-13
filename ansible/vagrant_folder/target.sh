@@ -5,8 +5,8 @@ cat >> /home/vagrant/.ssh/authorized_keys <<EOF
 $(cat /vagrant/ssh_key.pub)
 EOF
 
-cp /vagrant/ssh_key /home/vagrant/.ssh/
-chmod 600 /home/vagrant/.ssh/ssh_key
+cp /vagrant/ssh_key.pem /home/vagrant/.ssh/
+chmod 600 /home/vagrant/.ssh/ssh_key.pem
 
 # # Download Node Exporter
 # wget https://github.com/prometheus/node_exporter/releases/download/v1.7.0/node_exporter-1.7.0.linux-amd64.tar.gz
